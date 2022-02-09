@@ -1,14 +1,62 @@
 
-console.log('--------------- spread Object ---------------')
+console.log('--------------- spread Object ---------------');
+
 const obj = {
     name: 'NolBu',
     age: 30
 };
 
+// const name = obj.name;
+// const age = obj.age;
+// console.log(name, age);
+
+//스프레드 연산자는 복사뿐만 아니라 분리해서 가져오는것도 가능
+//obj에 정의한 키의 값이 있으면 꺼내서 각각의 같은 이름의 변수에 대입해준다.
+const { name, age } = obj;
+console.log(name, age);
+
+
+//이미 선언된 변수가 있으면 못 쓰므로 nickname 할당 가능
+const { name: nickname, age: num } = obj;
+console.log(nickname, num);
+
+
+//기본값을 할당할 수도 있다. 값이 있으면 존재하는 값으로 없으면 기본값 사용
+const { name: x = 'Unknown', age: y = 30, address = 'Seoul' } = obj;
+console.log(x, y, address);
+
+
+function getName(args) {
+    const { x, y } = args;
+    console.log(x, y);
+}
+
+getName({ x: '홍', y: '길동' });
 
 
 
-console.log('--------------- spread Array ---------------')
+
+
+console.log('--------------- spread Array ---------------');
 const ary = [10, 11, 100];
 const aryOne = [20, 21, 200];
+
+//배열이라 []로 받는다.
+const [a, b, c] = ary;
+console.log(a, b, c);
+
+//Alias는 설정 안됨. 
+
+//기본값은 설정 가능
+const [d, e, f = 400, g = 500] = ary;
+console.log(d, e, f, g);
+
+//객체처럼 복사도 가능하다
+const one = [...ary];
+console.log(one);
+
+//합쳐서 복사도 가능하다
+const two = [...ary, ...aryOne]; // aryOne 안 풀면 배열안에 배열이 들어감
+console.log(two);
+
 

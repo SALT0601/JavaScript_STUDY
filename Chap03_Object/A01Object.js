@@ -23,12 +23,19 @@ hungbu.total = hungbu.kor + hungbu.eng; //this로 하면 놀부값 가져옴
 hungbu.avg = hungbu.total / 2;
 console.log(`${hungbu.name}님의 총점은 ${hungbu.total} / 평균은 ${hungbu.avg}`);
 
+//함수가 global 영역에서 선언되었으므로 this는 window
+function outer() {
+    console.log(this);
+}
+console.log(outer());
 //new Object()를 { }로 변경해서 묶을 수 있다.
 //자바에서 VO랑 비슷하다.
+//함수 이외의 { } 영역의 this는 window
 let hangDan = {
     name: '향단',
     kor: 100,
     eng: 100,
+    //this는 window 
     total: this.kor + this.eng,
     avg: this.total / 2, //마지막 ,는 es6부터는 다음이 없어도 에러가 아님
 };

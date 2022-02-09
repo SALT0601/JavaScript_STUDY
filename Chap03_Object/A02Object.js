@@ -1,8 +1,6 @@
 
 console.log('---------------- Object -----------------');
 
-//var로 선언된 변수는 window(global)영역을 오염시킨다.
-//let와 const는 TDZ에 선언되므로 window(global)영역을 오염시키지 않는다.
 const X = 10;
 //x = 100; 에러남
 const obj = {
@@ -42,3 +40,10 @@ obj.display();
 
 delete obj.display;
 console.log(obj);
+console.log('');
+
+//열거 가능한 속성으로 지정된 요소만 출력 가능
+for (let key in obj) {
+    //console.log(typeof (key)); //string
+    console.log(key, obj[key]);  //obj.'name'(x) => obj['name']
+}

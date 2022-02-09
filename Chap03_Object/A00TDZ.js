@@ -1,4 +1,5 @@
-
+//var로 선언된 변수는 window(global)영역을 오염시킨다.
+//let와 const는 TDZ에 선언되므로 window(global)영역을 오염시키지 않는다.
 
 console.log(this);
 console.log(this == window);
