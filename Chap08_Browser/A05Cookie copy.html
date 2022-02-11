@@ -23,9 +23,7 @@
     </div>
 
     <script type="text/javascript">
-        //요즘은 UTF-8을 써서 알아서 잘 되어서 문자가 안깨지기때문에 잘 사용 안함
         // Not Escaped => A-Z a-z 0-9 - _ . ! ~ * ' ( )
-        //한글은 인코딩 됨
         var str = encodeURIComponent('ab123@#$%^&+=!*()_-한');
         console.log(str);
 
@@ -34,59 +32,53 @@
         console.log(str);
 
         /*
-        //key=value. 기본적으로는 브라우저를 닫으면 쿠키는 삭제된다.
-        let name = 'name = nolbu; max-age = 20';
+        // key=value. 기본적으로는 브라우저를 닫으면 쿠키는 삭제된다
+        let name = 'name=NolBu; max-age=20';
         document.cookie = name;
-        //다음 쿠키는 ;로 구분하여 저장. name=nolbu; age=20
-        let age = 'age = 20';
+        let age = 'age=20';
         document.cookie = age;
-
         console.log(document.cookie);
         */
 
-        //함수로 쓰는 방법
         function addCookie(name, value, expires, path, domain, sec) {
             let ck = '';
-            //아래 인코드는 한글 등 못 가져올때 저렇게 인코드를 통해 가져옴
-            ck += encodeURIComponent(name) + '=' + encodeURIComponent(value) + '; ';
+            ck += name + '=' + value + '; ';
             if (expires) ck += 'max-age=' + expires + '; ';
-            //expires=뒤에 시간을 써야한다고 들음..기억 안남
             if (path) ck += 'path=' + path + '; ';
             if (domain) ck += 'domain=' + domain + '; ';
             if (sec) ck += 'secure=' + sec + '; ';
-            //console.log(ck);
+            console.log(ck);
             document.cookie = ck;
         }
-        //  /는 모든페이지
-        addCookie('이름', '홍길동', 20, '/', 'localhost:5500', false);
+
+        //addCookie('이름', '이름', 20, '/', 'localhost:5500', false);
         addCookie('Age', '30', 20, '/', 'localhost:5500', false);
-        //addCookie('Address', 'Seoul', 20, '/', 'localhost:5500', false);
+        addCookie('Address', 'Seoul', 20, '/', 'localhost:5500', false);
 
         function getCookie(name) {
             let ck = document.cookie.split('; ');
-            //split('; ') 분리
 
-            for (let i = 0; i < ck.length; i++) { //name=HungBu; ex...=20;
-                let value = ck[i].split('=');
-                let key = decodeURIComponent(value[0]);
+            for (let i = 0; i < ck.length; i++) {    // name=Hungbu; ex..=20;
+                let value1 = ck[i].split('=');
+                let key = value1[0];
 
                 if (key == name) {
-                    let result = decodeURIComponent(value[1]);
+                    let result = value1[1];
                     return result;
                 }
             }
             return null;
         }
-        console.log(getCookie());
-        console.log(document.cookie);
+
+        // console.log(document.cookie);
+
         let name = getCookie('이름');
         let age = getCookie('Age');
         let address = getCookie('Address');
-        console.log(getCookie());
+
         document.getElementById('name').innerText = name;
         document.getElementById('age').innerText = age;
-        document.getElementById('address').innerText = address
-
+        document.getElementById('address').innerText = address;
     </script>
 </body>
 

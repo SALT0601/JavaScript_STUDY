@@ -76,7 +76,9 @@ console.log(obj);
 
 console.log(Number.MAX_SAFE_INTEGER);
 console.log(Number.MAX_VALUE);
-
+//자바스크립트에서 숫자를 담당하는 Number 클래스에는 MAX_SAFE_INTEGER라는 값이 있다.
+//이름에서 직관적으로 알 수 있다시피 연산에 있어서 안전한 정수 최댓값이라는 의미이다. 
+//그 숫자는 어떻게 되느냐, 바로 9007199254740991이다.
 console.log('---------------- String  -----------------');
 str = ' abc 123 DEF 456 ';
 
