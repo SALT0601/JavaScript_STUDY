@@ -1,21 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <title>A07 Event Properties / page 773</title>
     <script type="text/javascript">
-        (function(){
-            
+        (function () {
+            let boxX, boxY;
+
+            function onLoadEvent() {
+                let box = document.createElement('div'); //dom 요소를 만들 목적으로 씀. 지금은 div 태그 만들어짐
+                let boxText = document.createTextNode('Javascript');
+
+                box.appendChild(boxText); //지정한 요소 뒤에 생김
+
+                //스타일도 만들 수 있음
+                box.style.width = '100px';
+                box.style.height = '100px';
+                box.style.backgroundColor = 'tomato';
+                box.style.position = 'absolute';
+                box.style.left = '50px';
+                box.style.cursor = 'pointer';
+
+                function moveEvent(evt) { //여기서는 이벤트 쓰니까 evt 적어서 이벤트객체 받아줌
+                    box.style.left = evt.pageX - boxX + 'px';
+                    box.style.top = evt.pageY - boxY + 'px';
+                }
+
+                box.addEventListener('mousedown', function (evt) {
+                    boxX = evt.offsetX;
+                    boxY = evt.offsetY;
+                    document.addEventListener('mousemove', moveEvent);
+                });
+
+                box.addEventListener('mouseup', function (evt) { //evt는 그냥 묵시적으로 적은거라 안 적어도됨
+                    document.removeEventListener('mousemove', moveEvent);
+                });
+                //바디 자체가 다 도큐먼트
+                document.body.appendChild(box);
+                // 디아이브 태그 만들고 텍스트 만들고 바디에 추가한것
+
+
+            }
+            window.addEventListener('load', onLoadEvent);
         })();
     </script>
 </head>
+
 <body>
     <div class="card-body">
         <h2>7. Event Properties</h2>
-        
+
+
     </div>
 </body>
+
 </html>

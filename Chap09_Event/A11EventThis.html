@@ -1,24 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
     <title>A11 Event This / page 789</title>
     <script type="text/javascript">
 
-        (function(){
+        (function () {
             var data = [
-                {name: 'NolBu', kor: 100, eng: 90},
-                {name: 'HungBu', kor: 90, eng: 90},
-                {name: 'BangJa', kor: 80, eng: 90},
+                { name: 'NolBu', kor: 100, eng: 90 },
+                { name: 'HungBu', kor: 90, eng: 90 },
+                { name: 'BangJa', kor: 80, eng: 90 },
             ];
-            
+
+            function loadEvent() {
+                document.querySelector('#btn1').addEventListener('click', function (evt) {
+                    console.log(this); //자기 자신
+                });
+                // addEventListener(eventName, callback) {
+                // callback(event);
+                // }
+
+                function btn02Event(evt, color) {
+                    console.log(evt.target);
+                    evt.target.style.color = color;
+                }
+                document.querySelector('#btn2').addEventListener('click', function (evt) { //이벤트 핸들러는 반드시 이벤트 하나만 받아야한다.
+                    //이벤트 여러개 가져오려면 안에 다시 함수로  이벤트 가져와야함
+
+                    btn02Event(evt, 'orange');
+                });
+
+                //클로저 구조
+                function btn03Event(color, bgColor) {        //color => 'orange'
+                    return function (evt) {         // 그래서 위의 03이벤트 가져오면 아래의 이벤트를 가져와서 실행됨
+                        console.log(evt.target);
+                        evt.target.style.color = color;     //함수가 리턴되기 전에 변수의 값으로 변경되어 있음
+                        evt.target.style.backgroundColor = bgColor;
+                    };
+
+                }
+                document.querySelector('#btn3').addEventListener('click', btn03Event('orange', 'red'));
+
+
+            }
+
+
+
+            window.addEventListener('load', loadEvent);
         })();
-        
+
     </script>
 </head>
+
 <body>
     <div class="card-body">
         <h2>11. Event This</h2>
@@ -30,4 +68,5 @@
         </div>
     </div>
 </body>
+
 </html>

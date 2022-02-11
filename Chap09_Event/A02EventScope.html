@@ -21,18 +21,22 @@
     </div>
 
     <script>
-        function MyEvent() {
+        function MyEvent(evt) {
             console.log('My Event');
             console.log(evt);
+            console.log(evt.target);
+            console.log(evt.target.innerText);
         };
 
+        //이벤트 위에 위에 올라가다보면 도큐먼트와 윈도우도 상속 받고 있음
+        //이벤트도 스코프체인을 가지고 있다.
         function clickEvent(evt) {
-            console.log('Button Clicked: ', this, evt);
+            console.log('Button Clicked: ', this, evt); //여기 디스는 윈도우
         };
 
         document.clickEvent = function (evt) {
             console.log('Document: ', evt);
-            console.dir(this);
+            console.dir(this); //여기 디스는 도큐먼트
         }
     </script>
 </body>
