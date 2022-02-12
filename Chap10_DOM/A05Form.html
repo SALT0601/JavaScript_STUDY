@@ -16,26 +16,87 @@
                 const btn = document.querySelector('button[type="submit"]');
                 btn.addEventListener('click', function (evt) {
                     //form이 전송하는 기능 자체를 막아버린다. Ajax 등을 이용해 값을 전송하는 경우
-                    //evt.preventDefault();
-                    evt.preventDefault();
+                    //evt.preventDefault(); -> 여기에 두면 다 막아버리고. 이거 주석하면 밑에 값이 입력안될경우만 막는다.
+
 
                     const name = document.querySelector('input[name="name"]');
                     //alert(name);
-                    if (!name.value || name.value.length < 10) {
-                        alert('값을 입력해주세요');
+                    if (!name.value || name.value.length < 1) {
+                        alert('이름을 입력해주세요');
                         name.focus();
                         name.value = '';
-                        //return;
+                        evt.preventDefault();       //제약 조건에 만족하지 않으면 전송기능을 OFF
+                        return;                   //다음 체크로 넘어가는 걸 방지. 리턴 없으면 undefined로 입력되고 다움으로 넘어감
                     }
 
                     const age = document.querySelector('input[name="age"]');
 
-                    if (!name.value || name.value.length < 10) {
-                        alert('이름을 입력해주세요');
+                    if (!age.value) {
+                        alert('나이를 입력해주세요');
                         age.focus();
                         age.value = '';
-                        //return;
+                        evt.preventDefault();
+                        return;
                     }
+
+                    //radio button에 checked 속성을 안 건경우(걸었으면 자동으로 1개는 체크되어 있음)
+                    //map 순환은 안된다. 유사배열이기때문. 그래서 for문이나 forEach밖에 안됨
+                    document.querySelectorAll('input[name="sports"]').forEach((item, index) => {
+                        if (item.checked) sports = item.value;
+                    });
+
+                    console.log(sports);
+                    if (!sports) {
+                        alert('1개는 선택되어야 합니다.');
+                        evt.preventDefault();
+                        return;
+                    }
+
+                    console.log(document.querySelector('input[name="isChecked"]').value); //여기서 보면 on이라고 넘어감
+                    //check 여부와 상관없이 on이라는 값이 출력되므로 사용자의 체크 여부에 따라 동적으로 value 값을 할당
+                    const isChecked = document.querySelector('input[name="isChecked"]');
+                    if (isChecked.checked) {
+                        isChecked.value = 'YES';    //사용자가 체크하면 yes 떨어짐
+                    } else {
+                        isChecked.value = 'NO';
+                    }
+                    console.log(isChecked.value);
+
+                    //checkbox(다중 선택)
+                    const language = [];
+                    document.querySelectorAll('input[name="language"]:checked').forEach((item, index) => { //체크 한것만 가져온다,
+                        language.push(item.value);  //배열로 받음
+                    });
+                    console.log(language);
+                    if (language.length === 0) {
+                        alert('언어의 1개 이상은 선택해야 합니다.');
+                        evt.preventDefault();
+                        return;
+                    }
+
+                    //단일 선택. 선택의 값은 option 의 값이 선택된다.
+                    const baseball = document.querySelector('select[name="baseball"] option:checked').value; //체크된 값을 가져오러,
+                    //baseball의 값잉 없으면 에러처리
+
+
+                    //다중 선택
+                    const four = [];
+                    document.querySelectorAll('select[name="four"] option:checked').forEach((item, index) => {
+                        four.push(item.value);
+                    });
+                    //배열의 length 값이 0이면 경고창 처리
+
+                    sendData.name = name.value;
+                    sendData.age = age.value;
+                    sendData.sports = sports;
+                    sendData.isChecked = isChecked.value;
+                    sendData.language = language;
+                    sendData.baseball = baseball;
+                    sendData.four = four;
+
+                    console.log(sendData);
+
+
 
                 });
             }
@@ -49,7 +110,8 @@
     <div class="card-body">
         <h2>Form</h2>
 
-        <form>
+        <form method="GET" method="param.jsp">
+            <!--param.jsp 여기로 데이터 올라감  -->
             Name: <input type="text" name="name" class="form-control" />
             Age: <input type="text" name="age" class="form-control" />
             Date: <input type="date" name="date" class="form-control" />
